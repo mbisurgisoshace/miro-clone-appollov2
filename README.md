@@ -47,9 +47,9 @@ export default defineSchema({
 
 ## Defining API routes with Convex
 
-We need to define a file within the `convex` folder which will have exported functions that will interact with the convex using what is called Mutations.
+We need to define a file within the `convex` folder which will have exported functions that will interact with the convex enviroment.
 
-All mutations are called with an object that contains two properties which are ***args*** and ***handler***. 
+Most objects that will be provided from `./_generated/server` (mutation, query, etc) are called with an object that contains two properties which are ***args*** and ***handler***. 
 
 The args are the ones that will be sent to the handler function, and we should define the type of this arguments.
 
