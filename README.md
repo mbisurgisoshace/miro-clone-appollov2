@@ -187,3 +187,13 @@ https://liveblocks.io/docs
 ## Canvas Toolbar
 
 Currently, for this app, this will have the typical Miro Board app features. For Appollo this might be our different panels, like the UI Blocks panel, the individual selected block panel, Data panel, etc.
+
+## Appollo Use Cases / Techs to Use
+
+Here we will have ideas and notes about how we could integrate our ideas for appollo, with the current technologies and libraries that are being used on this tutorial
+
+### Real Time Collaboration
+
+Liveblocks will be responsible for all the real time collaboration between users. It will help us keep track of which users are currently connected to the App Builder for a particular project, screen or whichever form we use as the "canvas". Basically what we called ***boards*** on this tutorial. 
+
+It will also keep realtime data about what is being drawn on the canvas, in order to keep track of all the elements being added so we can keep the history updated to help with the redo/undo feature. 
