@@ -1,7 +1,11 @@
 # Appollo - Miro Clone Exercise
 
 Miro clone application, with most common features of a canvas app, like zooming, panning, drawing shapes, text, etc. It includes multi-user collaboration as well as real time collaboration.
-The idea is that we see what we can accomplish with this demo, and how much we can use as either a base, or for ideas for the Appollo Builder, and maybe once we have the final demo, try to extend it with some of Appollo use cases.
+The idea is that we see what we can accomplish with this demo, and how much we can use as either a base, or for ideas for the Appollo Builder, and maybe once we have the final demo, try to extend it with some of Appollo use cases. 
+
+The example application came from a YouTube tutorial:
+
+https://www.youtube.com/watch?v=ADJKbuayubE
 
 ## Starting the application
 
@@ -15,6 +19,9 @@ The idea is that we see what we can accomplish with this demo, and how much we c
 
 Convex provides a realtime configuration Backend & Database. You can use a Convex project to create API routes for your project to connect to and store information on a Database.
 
+**Docs**
+https://docs.convex.dev/home
+
 ## Authentication with Clerk
 
 Clerk provides ready to use authentication features, which includes multiple authentication providers, as well as allowing having organizations within users. Clerk will handle everything related to managing users, keeping track of the current auth state on the app to decide which pages are accessible and which ones are not. 
@@ -22,6 +29,9 @@ Clerk provides ready to use authentication features, which includes multiple aut
 Clerk will provide with out the box UI components for login, signup, code verification, resetting password, creating organizations, inviting members to organizations, managing user and organization profiles.
 
 In this application we are integrating it with Convex, which allows to easily protect our database and APIs only to authenticated users.
+
+**Docs**
+https://clerk.com/docs
 
 ## Defining data model with Convex
 
@@ -104,6 +114,9 @@ export default EmptyBoards;
 
 It is a simple state library. It only requires creating a ***store*** in the form of a React Hook, and then use it across your components on your app.
 
+**Docs**
+https://docs.pmnd.rs/zustand/getting-started/introduction
+
 When creating a store, you need to use the `create` function, which will be invoke with a ***set*** function which is used to update the state. This invoke function will be pass as parameters an object which contains your state values and your state update functions.
 
 ```
@@ -157,3 +170,14 @@ export function ModalProvider() {
   );
 }
 ```
+
+## Liveblocks
+
+It provides features for making real time collaboration features on your application. The basic commands to add Liveblocks to a project are as follows:
+
+`npm i @liveblocks/client @liveblocks/react`
+
+`npx create-liveblocks-app@latest --init --framework react`
+
+**Docs**
+https://liveblocks.io/docs
