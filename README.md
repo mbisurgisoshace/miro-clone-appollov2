@@ -100,7 +100,7 @@ function EmptyBoards() {
 export default EmptyBoards;
 ```
 
-### Zustand
+## Zustand
 
 It is a simple state library. It only requires creating a ***store*** in the form of a React Hook, and then use it across your components on your app.
 
@@ -130,7 +130,7 @@ export const useRenameModal = create<IRenameModal>((set) => ({
 }));
 ```
 
-### Modal Provider
+## Modal Provider
 
 You will see on the code a component called `ModalProvider.tsx`. This is a way of solving some hidration issues when trying to programmatically control Modals. So basically, we create a component that will only render this sort of modals, only once the component is actually run on the client, and the way of knowing this is by using the `useEffect` hook, which is only trigger on the client. After that we can set that the component was actually mounted, and then render the modals.
 In NextJS, even components that are annottated as `use client`, are still SSR, but they are not Server Components. 

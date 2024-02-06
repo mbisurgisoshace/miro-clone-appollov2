@@ -2,7 +2,7 @@
 
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
-import { useOrganization } from "@clerk/clerk-react";
+import { useRouter } from "next/navigation";
 
 import { api } from "@/convex/_generated/api";
 
@@ -15,6 +15,7 @@ interface NewBoardButtonProps {
 }
 
 function NewBoardButton({ orgId, disabled }: NewBoardButtonProps) {
+  const router = useRouter();
   const { mutate, pending } = useApiMutation(api.board.create);
 
   const onClick = async () => {
@@ -25,7 +26,7 @@ function NewBoardButton({ orgId, disabled }: NewBoardButtonProps) {
       });
 
       toast.success("Board created");
-      // TODO: Redirect to board/{id}
+      router.push(`/board/${id}`);
     } catch (err) {
       toast.error("Failed to create board");
     }
