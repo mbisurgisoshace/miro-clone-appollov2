@@ -179,5 +179,11 @@ It provides features for making real time collaboration features on your applica
 
 `npx create-liveblocks-app@latest --init --framework react`
 
+Liveblocks also provides the functionality for keeping track of events in order to achieve features like history, redo, undo, etc.
+
 **Docs**
 https://liveblocks.io/docs
+
+## Canvas Toolbar
+
+Currently, for this app, this will have the typical Miro Board app features. For Appollo this might be our different panels, like the UI Blocks panel, the individual selected block panel, Data panel, etc.
