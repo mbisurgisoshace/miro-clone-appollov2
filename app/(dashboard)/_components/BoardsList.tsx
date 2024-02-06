@@ -40,9 +40,9 @@ function BoardsList({ orgId, query }: BoardsListProps) {
 
   if (!data?.length && query.search) return <EmptySearch />;
 
-  if (!data.length && query.favorites) return <EmptyFavorites />;
+  if (!data?.length && query.favorites) return <EmptyFavorites />;
 
-  if (!data.length) return <EmptyBoards />;
+  if (!data?.length) return <EmptyBoards />;
 
   return (
     <div>
@@ -55,11 +55,11 @@ function BoardsList({ orgId, query }: BoardsListProps) {
           <BoardCard
             id={board._id}
             key={board._id}
-            isFavorite={false}
             title={board.title}
             orgId={board.ordId}
             imageUrl={board.imageUrl}
             authorId={board.authorId}
+            isFavorite={board.isFavorite}
             authorName={board.authorName}
             createdAt={board._creationTime}
           />

@@ -99,3 +99,61 @@ function EmptyBoards() {
 
 export default EmptyBoards;
 ```
+
+### Zustand
+
+It is a simple state library. It only requires creating a ***store*** in the form of a React Hook, and then use it across your components on your app.
+
+When creating a store, you need to use the `create` function, which will be invoke with a ***set*** function which is used to update the state. This invoke function will be pass as parameters an object which contains your state values and your state update functions.
+
+```
+import { create } from "zustand";
+
+const defaultValues = { id: "", title: "" };
+
+interface IRenameModal {
+  isOpen: boolean;
+  onClose: () => void;
+  initialValues: typeof defaultValues;
+  onOpen: (id: string, title: string) => void;
+}
+
+export const useRenameModal = create<IRenameModal>((set) => ({
+  isOpen: false,
+  onOpen: (id, title) => set({ isOpen: true, initialValues: { id, title } }),
+  onClose: () =>
+    set({
+      isOpen: false,
+      initialValues: defaultValues,
+    }),
+  initialValues: defaultValues,
+}));
+```
+
+### Modal Provider
+
+You will see on the code a component called `ModalProvider.tsx`. This is a way of solving some hidration issues when trying to programmatically control Modals. So basically, we create a component that will only render this sort of modals, only once the component is actually run on the client, and the way of knowing this is by using the `useEffect` hook, which is only trigger on the client. After that we can set that the component was actually mounted, and then render the modals.
+In NextJS, even components that are annottated as `use client`, are still SSR, but they are not Server Components. 
+```
+"use client";
+
+import { useEffect, useState } from "react";
+
+import RenameModal from "@/components/modals/RenameModal";
+
+export function ModalProvider() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
+  return (
+    <>
+      <RenameModal />
+    </>
+  );
+}
+```
