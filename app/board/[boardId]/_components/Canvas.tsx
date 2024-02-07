@@ -34,6 +34,7 @@ import {
   pointerEventToCanvasPoint,
   resizeBounds,
 } from "@/lib/utils";
+import SelectionTools from "./SelectionTools";
 
 const MAX_LAYERS = 100;
 
@@ -266,6 +267,7 @@ function Canvas({ boardId }: CanvasProps) {
         canvasState={canvasState}
         setCanvasState={setCanvasState}
       />
+      <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} />
       <Participants />
       <svg
         onWheel={onWheel}
