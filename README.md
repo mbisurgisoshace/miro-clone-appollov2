@@ -196,4 +196,15 @@ Here we will have ideas and notes about how we could integrate our ideas for app
 
 Liveblocks will be responsible for all the real time collaboration between users. It will help us keep track of which users are currently connected to the App Builder for a particular project, screen or whichever form we use as the "canvas". Basically what we called ***boards*** on this tutorial. 
 
-It will also keep realtime data about what is being drawn on the canvas, in order to keep track of all the elements being added so we can keep the history updated to help with the redo/undo feature. 
+It will also keep realtime data about what is being drawn on the canvas, in order to keep track of all the elements being added so we can keep the history updated to help with the redo/undo feature.
+
+### Canvas Objects and Interactions
+
+The canvas wraps everything that it needs to work (the toolbar, the people working on it currently, and the actual objects/drawings on it).
+
+The key elements for the canvas to work are:
+- Camera: it is responsible of showing where the user is currently looking at, which will allow the ***panning*** feature to work properly.
+- Canvas State: it manages all possible states the canvas can be in, as well as some extra information required, depending on which mode the canvas is currently is. This way we can know if the canvas is on select mode, or if it is inserting something, and in that case, what is being inserted, etc.
+- Canvas Events: are all the events that will be trigger by the canvas like PointerDown, PointerUp, LayerPointerDown, PointerMove, PointerLeave, etc.
+
+The way elements are displayed in the canvas is by adding them to and `<svg>` and to its `<g>` child. Then, each of the draw elements would be one of the known svg elements, like `<rect>`, `<text>`, etc.  
