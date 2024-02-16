@@ -1,5 +1,6 @@
 "use client";
 
+import "@pixi/events";
 import { nanoid } from "nanoid";
 import { LiveObject } from "@liveblocks/client";
 import { Stage, Container, Sprite, Text } from "@pixi/react";
@@ -44,6 +45,7 @@ import { Path } from "./Path";
 import { useDisableScrollBounce } from "@/hooks/useDisableScrollBounce";
 import { useDeleteLayers } from "@/hooks/useDeleteLayers";
 import LayerPreviewPixi from "./LayerPreviewPixi";
+import { FederatedPointerEvent } from "pixi.js";
 
 const MAX_LAYERS = 100;
 const SELECTION_NET_THRESHOLD = 5;
@@ -52,7 +54,7 @@ interface CanvasProps {
   boardId: string;
 }
 
-function Canvas({ boardId }: CanvasProps) {
+function CanvasPixi({ boardId }: CanvasProps) {
   const layers = useStorage((root) => root.layers);
   const layerIds = useStorage((root) => root.layerIds);
   const pencilDraft = useSelf((me) => me.presence.pencilDraft);
@@ -354,7 +356,7 @@ function Canvas({ boardId }: CanvasProps) {
   );
 
   const onLayerPointerDown = useMutation(
-    ({ self, setMyPresence }, e: React.PointerEvent, layerId: string) => {
+    ({ self, setMyPresence }, e: FederatedPointerEvent, layerId: string) => {
       if (
         canvasState.mode === CanvasMode.Pencil ||
         canvasState.mode === CanvasMode.Inserting
@@ -365,7 +367,7 @@ function Canvas({ boardId }: CanvasProps) {
       history.pause();
       e.stopPropagation();
 
-      const point = pointerEventToCanvasPoint(e, camera);
+      const point = pointerEventToCanvasPoint(e as any, camera);
 
       if (!self.presence.selection.includes(layerId)) {
         setMyPresence({ selection: [layerId] }, { addToHistory: true });
@@ -436,19 +438,30 @@ function Canvas({ boardId }: CanvasProps) {
       />
       <SelectionTools camera={camera} setLastUsedColor={setLastUsedColor} />
       <Participants />
-      <Stage width={window.innerWidth} height={window.innerHeight}>
-        {layerIds.map((layerId) => {
-          const layer = layers.get(layerId)!;
-          return (
-            <LayerPreviewPixi
-              id={layerId}
-              layer={layer}
-              key={layerId}
-              onLayerPointerDown={onLayerPointerDown}
-              selectionColor={layerIdsToColorSelection[layerId]}
-            />
-          );
-        })}
+      <Stage
+        onWheel={onWheel}
+        onPointerUp={onPointerUp}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerLeave={onPointerLeave}
+        options={{ backgroundColor: "rgb(245, 245, 245)" }}
+      >
+        <Container x={camera.x} y={camera.y}>
+          {layerIds.map((layerId) => {
+            const layer = layers.get(layerId)!;
+            return (
+              <LayerPreviewPixi
+                id={layerId}
+                layer={layer}
+                key={layerId}
+                onLayerPointerDown={onLayerPointerDown}
+                selectionColor={layerIdsToColorSelection[layerId]}
+              />
+            );
+          })}
+        </Container>
       </Stage>
       {/* <svg
         onWheel={onWheel}
@@ -497,4 +510,4 @@ function Canvas({ boardId }: CanvasProps) {
   );
 }
 
-export default Canvas;
+export default CanvasPixi;
