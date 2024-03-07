@@ -44,6 +44,7 @@ import { Path } from "./Path";
 import { useDisableScrollBounce } from "@/hooks/useDisableScrollBounce";
 import { useDeleteLayers } from "@/hooks/useDeleteLayers";
 import LayerPreviewPixi from "./LayerPreviewPixi";
+import SelectionBoxPixi from "./SelectionBoxPixi";
 
 const MAX_LAYERS = 100;
 const SELECTION_NET_THRESHOLD = 5;
@@ -438,17 +439,18 @@ function Canvas({ boardId }: CanvasProps) {
       <Participants />
       <Stage width={window.innerWidth} height={window.innerHeight}>
         {layerIds.map((layerId) => {
-          const layer = layers.get(layerId)!;
           return (
-            <LayerPreviewPixi
+            <LayerPreview
               id={layerId}
-              layer={layer}
               key={layerId}
               onLayerPointerDown={onLayerPointerDown}
               selectionColor={layerIdsToColorSelection[layerId]}
             />
           );
         })}
+        <SelectionBoxPixi
+          onResizeHandlePointerDown={onResizeHandlePointerDown}
+        />
       </Stage>
       {/* <svg
         onWheel={onWheel}

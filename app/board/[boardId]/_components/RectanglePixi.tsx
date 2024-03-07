@@ -22,12 +22,12 @@ function RectanglePixi({
   const draw = useCallback(
     (g: IGraphics) => {
       g.clear();
+      if (selectingColor) g.lineStyle(1, selectingColor);
       g.beginFill(colorToCss(fill));
       g.drawRect(x, y, width, height);
-      //g.setTransform(x, y);
       g.endFill();
     },
-    [x, y, width, height, fill]
+    [x, y, width, height, fill, selectingColor]
   );
 
   return (

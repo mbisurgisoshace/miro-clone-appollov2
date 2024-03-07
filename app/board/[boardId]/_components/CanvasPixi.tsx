@@ -109,6 +109,8 @@ function CanvasPixi({ boardId }: CanvasProps) {
   );
 
   const unselectLayers = useMutation(({ self, setMyPresence }) => {
+    console.log("unselectLayers");
+
     if (self.presence.selection.length > 0) {
       setMyPresence({ selection: [] }, { addToHistory: true });
     }
@@ -310,6 +312,8 @@ function CanvasPixi({ boardId }: CanvasProps) {
 
   const onPointerDown = useCallback(
     (e: React.PointerEvent) => {
+      console.log("onPointerDown");
+
       const point = pointerEventToCanvasPoint(e, camera);
 
       if (canvasState.mode === CanvasMode.Inserting) return;
@@ -326,6 +330,7 @@ function CanvasPixi({ boardId }: CanvasProps) {
 
   const onPointerUp = useMutation(
     ({}, e: React.PointerEvent) => {
+      console.log("onPointerUp");
       const point = pointerEventToCanvasPoint(e, camera);
 
       if (
@@ -365,7 +370,7 @@ function CanvasPixi({ boardId }: CanvasProps) {
       }
 
       history.pause();
-      e.stopPropagation();
+      e.stopImmediatePropagation();
 
       const point = pointerEventToCanvasPoint(e as any, camera);
 
@@ -376,6 +381,14 @@ function CanvasPixi({ boardId }: CanvasProps) {
       setCanvasState({ mode: CanvasMode.Translating, current: point });
     },
     [setCanvasState, camera, history, canvasState.mode]
+  );
+
+  const updateValue = useMutation(
+    ({ storage }, id: string, newValue: string) => {
+      const liveLayers = storage.get("layers");
+      liveLayers.get(id)?.set("value", newValue);
+    },
+    []
   );
 
   const selections = useOthersMapped((other) => other.presence.selection);
@@ -446,7 +459,7 @@ function CanvasPixi({ boardId }: CanvasProps) {
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerLeave={onPointerLeave}
-        options={{ backgroundColor: "rgb(245, 245, 245)" }}
+        options={{ backgroundColor: "0xf5f5f5" }}
       >
         <Container x={camera.x} y={camera.y}>
           {layerIds.map((layerId) => {
@@ -456,6 +469,7 @@ function CanvasPixi({ boardId }: CanvasProps) {
                 id={layerId}
                 layer={layer}
                 key={layerId}
+                updateValue={updateValue}
                 onLayerPointerDown={onLayerPointerDown}
                 selectionColor={layerIdsToColorSelection[layerId]}
               />

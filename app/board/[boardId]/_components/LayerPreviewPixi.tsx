@@ -13,15 +13,23 @@ import { colorToCss } from "@/lib/utils";
 import RectanglePixi from "./RectanglePixi";
 import { FederatedPointerEvent } from "pixi.js";
 import EllipsePixi from "./EllipsePixi";
+import TextPixi from "./TextPixi";
 
 interface LayerPreviewProps {
   id: string;
   layer: Layer;
   selectionColor?: string;
+  updateValue: (id: string, newValue: string) => void;
   onLayerPointerDown: (e: FederatedPointerEvent, layerId: string) => void;
 }
 export const LayerPreviewPixi = memo(
-  ({ id, layer, selectionColor, onLayerPointerDown }: LayerPreviewProps) => {
+  ({
+    id,
+    layer,
+    selectionColor,
+    onLayerPointerDown,
+    updateValue,
+  }: LayerPreviewProps) => {
     //const layer = useStorage((root) => root.layers.get(id));
     if (!layer) return null;
 
@@ -47,15 +55,16 @@ export const LayerPreviewPixi = memo(
       //       onPointerDown={onLayerPointerDown}
       //     />
       //   );
-      // case LayerType.Text:
-      //   return (
-      //     <Text
-      //       id={id}
-      //       layer={layer}
-      //       selectingColor={selectionColor}
-      //       onPointerDown={onLayerPointerDown}
-      //     />
-      //   );
+      case LayerType.Text:
+        return (
+          <TextPixi
+            id={id}
+            layer={layer}
+            updateValue={updateValue}
+            selectingColor={selectionColor}
+            onPointerDown={onLayerPointerDown}
+          />
+        );
       case LayerType.Rectangle:
         return (
           <RectanglePixi

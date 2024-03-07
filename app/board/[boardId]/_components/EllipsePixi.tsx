@@ -24,14 +24,18 @@ function EllipsePixi({
     (g: IGraphics) => {
       g.clear();
       g.beginFill(colorToCss(fill));
-      g.drawEllipse(x, y, width, height);
+      g.drawEllipse(x, y, width / 2, height / 2);
       g.endFill();
     },
     [x, y, width, height, fill]
   );
 
   return (
-    <Graphics draw={draw} onpointerdown={(e) => onPointerDown(e, id)} />
+    <Graphics
+      interactive={true}
+      draw={draw}
+      onpointerdown={(e) => onPointerDown(e, id)}
+    />
     // <ellipse
     //   x={0}
     //   y={0}
